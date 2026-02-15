@@ -1,0 +1,262 @@
+📓 React Notes – Understanding index.html & App.js
+🟢 PART 1 — Understanding index.html
+<!DOCTYPE html>
+<html lang="en">
+
+✅ <!DOCTYPE html>
+
+Tells the browser this is an HTML5 document.
+
+Must be written at the top.
+
+✅ <html lang="en">
+
+Root element of HTML.
+
+lang="en" → Language is English (good for SEO & accessibility).
+
+🟢 Head Section
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shabrez React Learning</title>
+</head>
+
+🔹 <meta charset="UTF-8">
+
+Supports all characters (including emojis 🇮🇳).
+
+🔹 <meta name="viewport"...>
+
+Makes website responsive on mobile devices.
+
+🔹 <title>
+
+Sets browser tab name.
+
+🟢 Body Section
+<body>
+    <div id="root">
+
+🔥 Very Important
+
+<div id="root"> is the container where React will inject everything.
+
+React replaces whatever is inside this div.
+
+🟡 Static HTML Inside Root (Temporary Content)
+<h2>Hi There!</h2>
+
+
+You added multiple <h2> tags.
+
+⚠️ Important Concept:
+Once React renders, this static HTML will be completely replaced.
+
+🟢 Script Section
+<script type="module" src="./App.js"></script>
+
+🔹 type="module"
+
+Enables ES Modules.
+
+Allows import/export.
+
+Runs in strict mode.
+
+Deferred by default.
+
+🔹 src="./App.js"
+
+Loads your React JavaScript file.
+
+🟢 PART 2 — Understanding App.js
+🔹 Import Statements
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+Why React?
+
+We need React to:
+
+Create elements
+
+Use React features
+
+Why ReactDOM?
+
+ReactDOM connects React with the browser DOM.
+
+react-dom/client is used for React 18 (modern root API).
+
+🟢 Creating React Elements
+const parent = React.createElement("div", {id:"parent"}, [...]);
+
+🔥 Syntax of React.createElement
+React.createElement(type, props, children)
+
+1️⃣ type → HTML tag (div, h1, etc.)
+2️⃣ props → attributes (id, class, etc.)
+3️⃣ children → content inside element
+🟢 Understanding Your Structure
+
+You created this structure:
+
+<div id="parent">
+    <div id="child1">
+        <h2>Md Shabrez Akhtar 🇮🇳</h2>
+        <h2>I am From Bihar</h2>
+    </div>
+
+    <div id="child2">
+        <h2>Btech in CSE</h2>
+        <h2>From AKTU University</h2>
+    </div>
+</div>
+
+🟢 Nested Structure Explanation
+Step 1 → Create Parent Div
+"div", {id:"parent"}
+
+Step 2 → Inside Parent → Array of Children
+[
+  child1,
+  child2
+]
+
+
+We pass an array because:
+
+There are multiple child elements.
+
+🟢 Child 1
+React.createElement("div", {id: "child1"}, [...])
+
+
+Inside it:
+
+Two <h2> elements
+
+🟢 Child 2
+
+Same structure:
+
+One div
+
+Two h2 tags inside it
+
+🟢 Why We Used Array?
+
+Because React.createElement supports:
+
+Single child
+
+OR multiple children (using array)
+
+If we didn’t use array → It would throw error.
+
+🟢 Creating Root
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+🔥 What Happens Here?
+
+Select HTML div with id="root"
+
+Create React root container
+
+Attach React to that div
+
+🟢 Rendering
+root.render(parent);
+
+
+This tells React:
+
+👉 “Take this parent element and display it inside root div.”
+
+🟢 What Happens in Browser?
+
+Before React:
+
+Hi There!
+Hi There!
+Hi There!
+
+
+After React:
+All those h2 tags disappear.
+
+And replaced by:
+
+Md Shabrez Akhtar 🇮🇳
+I am From Bihar
+Btech in CSE
+From AKTU University
+
+
+Because React takes control of the root div.
+
+🟢 Important Concepts Learned
+1️⃣ React is a JavaScript Library
+
+It creates UI using JavaScript.
+
+2️⃣ React.createElement returns an Object
+
+It does NOT create real DOM directly.
+
+It creates:
+👉 React Element (Virtual DOM object)
+
+3️⃣ ReactDOM renders Virtual DOM into Real DOM
+4️⃣ React 18 uses createRoot()
+
+Older version used:
+
+ReactDOM.render()
+
+
+Now replaced with:
+
+createRoot().render()
+
+🟢 Behind The Scene
+
+Your code:
+
+React.createElement(...)
+
+
+Is converted internally into:
+
+{
+  type: "div",
+  props: {
+    id: "parent",
+    children: [...]
+  }
+}
+
+
+React uses this object to create real DOM efficiently.
+
+🟢 Big Picture Understanding
+
+HTML → Provides container
+React → Creates elements
+ReactDOM → Injects elements into DOM
+root.render() → Displays UI
+
+🟢 Summary for Self Revision
+
+index.html → Only provides root div.
+
+React replaces everything inside root.
+
+React.createElement() → Creates virtual DOM.
+
+Multiple children → Use array.
+
+createRoot() → Connects React with real DOM.
+
+render() → Displays UI.
